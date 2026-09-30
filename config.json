@@ -1,0 +1,25 @@
+{
+  "sources": [
+    {
+      "id": "psx8-upstream",
+      "type": "github-commits",
+      "enabled": true,
+      "owner": "psx8",
+      "repo": "psx8.github.io",
+      "branch": "main",
+      "priority": 1,
+      "description": "Monitora psx8/psx8.github.io por novos commits — alerta quando upstream atualizar"
+    },
+    {
+      "id": "manifest-local",
+      "type": "manifest-url",
+      "enabled": true,
+      "url": "manifest.json",
+      "priority": 2,
+      "description": "Manifesto local — fonte dos arquivos para download"
+    }
+  ],
+  "pinnedVersion": null,
+  "checkIntervalMinutes": 60,
+  "allowPrerelease": false
+}

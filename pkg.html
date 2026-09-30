@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PKG Brasil — Desbloqueio PS4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;600&display=swap" />
+
+  <style>
+    @property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+    :root {
+      --bg: #070707; --surface: #0e0e0e; --s2: #141414;
+      --border: #1f1f1f; --b2: #2c2c2c;
+      --y: #f5c518; --y-dim: #c49a10; --y-bg: rgba(245,197,24,.07); --y-glow: rgba(245,197,24,.22);
+      --text: #efefef; --text-2: #666; --text-3: #333;
+      --r: 14px;
+      --fd: 'Space Grotesk', system-ui, sans-serif;
+      --fb: 'Inter', system-ui, sans-serif;
+      color-scheme: dark;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { height:100%; }
+    body {
+      font-family:var(--fb); background:var(--bg); color:var(--text);
+      min-height:100%; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    }
+    .bg-orb { position:fixed; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0; mix-blend-mode:screen; }
+    .bg-orb-1 { width:600px; height:600px; background:radial-gradient(circle,rgba(245,197,24,.05) 0%,transparent 70%); top:-150px; left:-180px; animation:orb1 16s ease-in-out infinite; }
+    .bg-orb-2 { width:400px; height:400px; background:radial-gradient(circle,rgba(245,197,24,.04) 0%,transparent 70%); bottom:-80px; right:-80px; animation:orb2 20s ease-in-out infinite; }
+    @keyframes orb1 { 0%,100%{transform:translate(0,0)} 40%{transform:translate(55vw,35vh)} 75%{transform:translate(25vw,65vh)} }
+    @keyframes orb2 { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-45vw,-40vh)} 80%{transform:translate(-15vw,-55vh)} }
+    .bg-grid {
+      position:fixed; inset:0;
+      background-image: linear-gradient(rgba(245,197,24,.02) 1px,transparent 1px), linear-gradient(90deg,rgba(245,197,24,.02) 1px,transparent 1px);
+      background-size:52px 52px; pointer-events:none; z-index:0;
+    }
+    .page {
+      position:relative; z-index:1;
+      max-width:860px; margin:0 auto;
+      padding-inline:clamp(16px,5vw,48px);
+      padding-top:clamp(32px,6vh,60px);
+      padding-bottom:60px;
+    }
+    .step { animation:fadeUp .4s ease; }
+    .step[hidden] { display:none !important; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+    .choose-label {
+      text-align:center; font-size:clamp(.85rem,2.5vw,1rem);
+      color:var(--text-2); margin-bottom:clamp(16px,3vh,28px); letter-spacing:.02em;
+    }
+    .fw-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(clamp(140px,28vw,200px),1fr));
+      gap:clamp(10px,2vw,16px);
+    }
+    .fw-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+      padding:clamp(20px,3vw,28px) clamp(12px,2vw,20px);
+      cursor:pointer; position:relative; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+      transition:border-color .2s,background .2s,box-shadow .2s;
+      transform-style:preserve-3d; will-change:transform;
+      animation:cardIn .45s ease backwards;
+    }
+    .fw-card::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(110deg,transparent 36%,rgba(245,197,24,.1) 50%,transparent 64%);
+      background-size:250% 100%; background-position:220% 0;
+      transition:background-position .6s ease; pointer-events:none;
+    }
+    .fw-card::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,var(--y),transparent);
+      transform:scaleX(0); transition:transform .25s ease;
+    }
+    .fw-card:hover {
+      border-color:rgba(245,197,24,.38); background:var(--s2);
+      box-shadow:0 10px 40px rgba(245,197,24,.08),0 2px 8px rgba(0,0,0,.5);
+    }
+    .fw-card:hover::before { background-position:-220% 0; }
+    .fw-card:hover::after { transform:scaleX(1); }
+    .fw-card:active { transform:scale(.96)!important; transition:transform .1s; }
+    .fw-card:focus-visible { outline:2px solid var(--y); outline-offset:3px; }
+    .fw-card:nth-child(1) { animation-delay:.04s }
+    .fw-card:nth-child(2) { animation-delay:.09s }
+    .fw-card:nth-child(3) { animation-delay:.14s }
+    .fw-card:nth-child(4) { animation-delay:.19s }
+    .fw-card:nth-child(5) { animation-delay:.24s }
+    .fw-card:nth-child(6) { animation-delay:.29s }
+    @keyframes cardIn {
+      from { opacity:0; transform:perspective(600px) rotateX(10deg) translateY(24px); }
+      to   { opacity:1; transform:perspective(600px) rotateX(0) translateY(0); }
+    }
+    .fw-range {
+      font-family:var(--fd); font-size:clamp(1.4rem,4vw,2rem);
+      font-weight:800; color:var(--y);
+      letter-spacing:-.4px; font-variant-numeric:tabular-nums;
+      text-align:center; line-height:1.1; pointer-events:none;
+    }
+
+    .back-btn {
+      display:inline-flex; align-items:center; gap:6px;
+      background:transparent; border:none; color:var(--text-2);
+      font-family:var(--fb); font-size:.82rem;
+      cursor:pointer; padding:8px 0; margin-bottom:24px;
+      transition:color .15s;
+    }
+    .back-btn:hover { color:var(--text); }
+
+    .progress-panel {
+      position:relative; padding:2px; border-radius:24px;
+      animation:panelIn .45s cubic-bezier(.22,1,.36,1);
+    }
+    .progress-panel::before {
+      content:''; position:absolute; inset:-2px;
+      border-radius:26px; z-index:0;
+      background:conic-gradient(from var(--angle),transparent 25%,var(--y) 50%,transparent 75%);
+      animation:rotateBorder 2.5s linear infinite; opacity:.65;
+    }
+    @keyframes rotateBorder { to { --angle:360deg; } }
+    .progress-panel-inner {
+      position:relative; z-index:1;
+      background:var(--surface); border-radius:22px;
+      padding:clamp(32px,5vw,60px) clamp(24px,5vw,60px);
+      text-align:center; overflow:hidden;
+    }
+    .progress-panel-inner::before {
+      content:''; position:absolute;
+      top:-80px; left:50%; translate:-50% 0;
+      width:320px; height:320px;
+      background:radial-gradient(circle,rgba(245,197,24,.08) 0%,transparent 65%); pointer-events:none;
+    }
+    @keyframes panelIn { from{opacity:0;transform:scale(.93) translateY(28px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+    .prog-fw-label {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--y-bg); border:1px solid rgba(245,197,24,.22); border-radius:99px;
+      padding:4px 16px; font-size:.75rem; color:var(--y);
+      font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+      margin-bottom:clamp(20px,3vh,32px);
+    }
+    .prog-pct {
+      font-family:var(--fd); font-size:clamp(5rem,20vw,9rem);
+      font-weight:800; color:var(--y);
+      line-height:1; letter-spacing:-.04em;
+      margin-bottom:clamp(16px,2.5vh,28px); font-variant-numeric:tabular-nums;
+    }
+    .pct-sym { font-size:40%; vertical-align:top; margin-top:.18em; display:inline-block; color:var(--y-dim); }
+    .prog-track {
+      height:6px; background:var(--border); border-radius:99px;
+      overflow:hidden; margin-bottom:clamp(12px,2vh,20px); position:relative;
+    }
+    .prog-bar {
+      height:100%; width:0%;
+      background:linear-gradient(90deg,var(--y-dim),var(--y));
+      border-radius:99px; transition:width .12s linear; position:relative;
+    }
+    .prog-bar::after {
+      content:''; position:absolute; right:-4px; top:50%; translate:0 -50%;
+      width:12px; height:12px; border-radius:50%;
+      background:var(--y); box-shadow:0 0 10px 4px rgba(245,197,24,.5);
+      opacity:0; transition:opacity .2s;
+    }
+    .prog-bar.glow::after { opacity:1; }
+    .prog-status {
+      font-size:clamp(.78rem,2vw,.88rem); color:var(--text-2);
+      min-height:1.4em; transition:opacity .3s;
+    }
+
+    #particles { position:fixed; inset:0; pointer-events:none; z-index:9999; }
+    .particle { position:absolute; width:6px; height:6px; background:var(--y); border-radius:50%; animation:fly .65s ease-out forwards; }
+    .particle.s { width:3px; height:3px; background:#fff; }
+    @keyframes fly { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)} }
+
+    .footer { text-align:center; padding-top:clamp(32px,5vh,52px); font-size:.7rem; color:var(--text-3); }
+    .version-badge { color:var(--y); font-weight:700; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-grid"></div>
+  <div id="particles"></div>
+
+  <div class="page">
+    <main>
+      <section id="step-select" class="step">
+        <p class="choose-label">Escolha a versão do seu PS4</p>
+        <div id="fw-grid" class="fw-grid"></div>
+      </section>
+
+      <section id="step-ready" class="step" hidden>
+        <button class="back-btn" id="btn-back">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12.5L5.5 8 10 3.5" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Voltar
+        </button>
+        <div class="progress-panel">
+          <div class="progress-panel-inner">
+            <div class="prog-fw-label" id="prog-fw-label">FW 13.52</div>
+            <div class="prog-pct" id="prog-pct">0<span class="pct-sym">%</span></div>
+            <div class="prog-track">
+              <div class="prog-bar" id="prog-bar"></div>
+            </div>
+            <div class="prog-status" id="prog-status">Inicializando…</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">PKG Brasil · Desbloqueio PS4 · <span class="version-badge">STANDALONE</span></footer>
+  </div>
+
+<script>
+// Kill any old service worker that could serve stale content
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+}
+
+const STATIC_GROUPS = [
+  { label: '13.02 – 13.52', entrypoint: '1352/index.html' },
+  { label: '11.00 – 13.00', entrypoint: '1300/version-selector.html' },
+  { label: '9.00 – 9.60',   entrypoint: '900/version-selector.html' },
+  { label: '7.00 – 8.52',   entrypoint: '700/version-selector.html' },
+  { label: '6.72',          entrypoint: '672/index.html' },
+  { label: '5.05',          entrypoint: '505/index.html' },
+];
+
+const $ = id => document.getElementById(id);
+const el = {
+  stepSelect:  $('step-select'), stepReady: $('step-ready'),
+  fwGrid: $('fw-grid'), btnBack: $('btn-back'),
+  progFwLabel: $('prog-fw-label'), progPct: $('prog-pct'),
+  progBar: $('prog-bar'), progStatus: $('prog-status'),
+  particles: $('particles'),
+};
+
+const PHASES = [
+  { at:  0, text: 'Inicializando…' },
+  { at: 18, text: 'Carregando exploit…' },
+  { at: 45, text: 'Verificando integridade…' },
+  { at: 75, text: 'Aplicando patches…' },
+  { at: 92, text: 'Quase lá…' },
+  { at: 99, text: 'Pronto!' },
+];
+
+function burst(originEl) {
+  const r = originEl.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = i % 3 === 0 ? 'particle s' : 'particle';
+    const angle = (i / 28) * 360 + Math.random() * 10;
+    const dist = 50 + Math.random() * 100;
+    p.style.cssText = `left:${cx}px;top:${cy}px;--tx:${Math.cos(angle*Math.PI/180)*dist}px;--ty:${Math.sin(angle*Math.PI/180)*dist}px;animation-delay:${Math.random()*.1}s;animation-duration:${.5+Math.random()*.3}s;`;
+    el.particles.appendChild(p);
+    p.addEventListener('animationend', () => p.remove(), { once: true });
+  }
+}
+
+function attachTilt(card) {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+    const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+    card.style.transform = `perspective(600px) rotateX(${-y*10}deg) rotateY(${x*10}deg) scale3d(1.04,1.04,1.04)`;
+    card.style.transition = 'transform .06s ease,border-color .2s,background .2s,box-shadow .2s';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform .32s ease,border-color .2s,background .2s,box-shadow .2s';
+  });
+}
+
+// Blindagem: força tudo a ser relativo, nunca psx8.github.io
+function sanitizeTarget(url) {
+  if (!url) return '';
+  let s = String(url);
+  if (s.indexOf('psx8.github.io/') !== -1) s = s.split('psx8.github.io/')[1];
+  if (/^https?:\/\//i.test(s)) {
+    try {
+      const u = new URL(s);
+      if (u.origin !== window.location.origin) s = u.pathname.replace(/^\//, '');
+    } catch (e) {}
+  }
+  return s;
+}
+
+function runProgress(targetUrl) {
+  const safeTarget = sanitizeTarget(targetUrl);
+  let current = 0, raf;
+  function speed(p) { return p<30?1.4:p<60?.7:p<85?.4:p<96?.2:1.8; }
+  function updatePhase(p) {
+    const phase = [...PHASES].reverse().find(x => p >= x.at);
+    if (phase) el.progStatus.textContent = phase.text;
+  }
+  function tick() {
+    current = Math.min(100, current + speed(current) * (Math.random() * .6 + .7));
+    const r = Math.floor(current);
+    el.progPct.innerHTML = `${r}<span class="pct-sym">%</span>`;
+    el.progBar.style.width = current + '%';
+    if (current > 5) el.progBar.classList.add('glow');
+    updatePhase(r);
+    if (current < 100) raf = requestAnimationFrame(tick);
+    else {
+      el.progBar.style.width = '100%';
+      el.progStatus.textContent = 'Redirecionando…';
+      burst(el.progBar);
+      setTimeout(() => { window.location.href = safeTarget; }, 600);
+    }
+  }
+  raf = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(raf);
+}
+
+let cancelProgress = null;
+function goReady(group) {
+  el.progFwLabel.textContent = `FW ${group.label}`;
+  el.progPct.innerHTML = `0<span class="pct-sym">%</span>`;
+  el.progBar.style.width = '0%';
+  el.progBar.classList.remove('glow');
+  el.progStatus.textContent = 'Inicializando…';
+  el.stepSelect.hidden = true;
+  el.stepReady.hidden = false;
+  cancelProgress = runProgress(group.entrypoint);
+}
+
+el.btnBack?.addEventListener('click', () => {
+  if (cancelProgress) { cancelProgress(); cancelProgress = null; }
+  el.stepReady.hidden = true;
+  el.stepSelect.hidden = false;
+});
+
+function buildGrid(groups) {
+  el.fwGrid.innerHTML = '';
+  groups.forEach(group => {
+    const card = document.createElement('div');
+    card.className = 'fw-card'; card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Firmware ${group.label}`);
+    card.innerHTML = `<div class="fw-range">${group.label}</div>`;
+    card.addEventListener('click', () => goReady(group));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') goReady(group); });
+    attachTilt(card);
+    el.fwGrid.appendChild(card);
+  });
+}
+buildGrid(STATIC_GROUPS);
+</script>
+</body>
+</html>

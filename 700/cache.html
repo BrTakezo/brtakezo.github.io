@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" manifest="PSPulse.cache">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKG Brasil // Cache FW 7.00-8.52</title>
+<script>history.replaceState(null, null, 'index.html');</script>
+<style>
+:root {
+    --bg:#070707; --surface:#0e0e0e; --line:#1f1f1f; --lb:#2c2c2c;
+    --text:#f5f5f5; --muted:#b5b5b5; --dim:#666;
+    --y:#f5c518; --y-dim:#c49a10;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html,body { height:100%; }
+body {
+    background:var(--bg);
+    background-image:linear-gradient(rgba(245,197,24,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,197,24,.03) 1px,transparent 1px);
+    background-size:36px 36px;
+    color:var(--text); font:16px/1.5 Consolas,"Liberation Mono",monospace;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    min-height:100vh; padding:20px 16px; overflow-x:hidden;
+}
+.bar {
+    position:fixed; top:0; left:0; right:0;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--lb); background:var(--bg);
+    font-size:13px; letter-spacing:.1em; text-transform:uppercase; padding:10px 20px; z-index:10;
+}
+.bar b { color:var(--y); font-weight:400; }
+.bar-right { color:var(--dim); }
+.bar-right::before { color:var(--y); content:"\25CF "; }
+.card {
+    background:var(--surface); border:1px solid var(--line); border-radius:20px;
+    padding:clamp(28px,5vw,44px) clamp(24px,5vw,40px); text-align:center;
+    width:min(92vw,460px); position:relative; overflow:hidden;
+}
+.card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--y),transparent); }
+.kicker { color:var(--y); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; margin-bottom:14px; font-weight:700; }
+.title { font-size:clamp(1.4rem,5vw,2rem); font-weight:700; color:var(--y); margin-bottom:10px; }
+.sub { color:var(--muted); font-size:.85rem; margin-bottom:24px; }
+.prog-wrap { background:var(--line); border-radius:99px; overflow:hidden; height:8px; margin-bottom:12px; }
+.prog-fill { height:100%; width:0%; background:linear-gradient(90deg,var(--y-dim),var(--y)); border-radius:99px; transition:width .2s linear; }
+.prog-label { color:var(--y); font-size:1.1rem; font-weight:700; margin-bottom:8px; }
+.status { color:var(--dim); font-size:.8rem; }
+.footer { text-align:center; padding-top:24px; font-size:.7rem; color:var(--dim); }
+</style>
+</head>
+<body>
+<header class="bar">
+    <span><b>PKG Brasil</b> // desbloqueio ps4</span>
+    <span class="bar-right">fw 7.00-8.52</span>
+</header>
+<div class="card">
+    <div class="kicker">Cache Offline</div>
+    <div class="title">Preparando arquivos…</div>
+    <div class="sub">Salvando para uso offline no PS4.</div>
+    <div class="prog-label" id="progressText">0%</div>
+    <div class="prog-wrap"><div class="prog-fill" id="myBar"></div></div>
+    <div class="status" id="progress">Inicializando cache…</div>
+</div>
+<footer class="footer">PKG Brasil · Desbloqueio PS4</footer>
+<script>
+if (window.applicationCache.status == 2) { localStorage.is755BCached = true; }
+window.applicationCache.ondownloading = function () {
+    document.getElementById("progress").innerHTML = "Baixando arquivos…";
+    localStorage.is755BCached = false;
+};
+window.applicationCache.onprogress = function (a) {
+    var progress = Math.round(100 * (a.loaded / a.total));
+    document.getElementById("myBar").style.width = progress + "%";
+    document.getElementById("progressText").innerHTML = progress + "%";
+};
+window.applicationCache.oncached = function () {
+    document.getElementById("progress").innerHTML = "Cache salvo com sucesso!";
+    localStorage.is755BCached = true;
+    setTimeout(function () { window.location.reload(); }, 1500);
+};
+window.applicationCache.onupdateready = function () {
+    document.getElementById("progress").innerHTML = "Cache atualizado!";
+    localStorage.is755BCached = true;
+    setTimeout(function () { window.location.reload(); }, 1500);
+};
+window.applicationCache.onnoupdate = function () { window.location.replace("index.html"); };
+window.applicationCache.onerror = function () { window.location.replace("index.html"); };
+</script>
+</body>
+</html>

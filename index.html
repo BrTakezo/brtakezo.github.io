@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PKG Brasil — Desbloqueio PS4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body>
+
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-grid"></div>
+  <div id="particles"></div>
+
+  <div class="page">
+
+    <main>
+
+      <section id="step-select" class="step">
+        <p class="choose-label">Escolha a versão do seu PS4</p>
+        <div id="fw-grid" class="fw-grid"></div>
+      </section>
+
+
+    </main>
+
+    <footer class="footer">PKG Brasil · Desbloqueio PS4 · <span style="color:#f5c518">v3</span></footer>
+  </div>
+
+  <script>
+    // Unregister any old service worker that might be serving cached content
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+    }
+  </script>
+
+  <script>
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PKG BRASIL — Tudo embutido, sem depender de app.js/update-system.js
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const STATIC_GROUPS = [
+    { label: '13.02 – 13.52', entrypoint: '1352/index.html' },
+    { label: '11.00 – 13.00', entrypoint: '1300/version-selector.html' },
+    { label: '9.00 – 9.60',   entrypoint: '900/version-selector.html' },
+    { label: '7.00 – 8.52',   entrypoint: '700/version-selector.html' },
+    { label: '6.72',          entrypoint: '672/index.html' },
+    { label: '5.05',          entrypoint: '505/index.html' },
+  ];
+
+  function attachTilt(card) {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const x  = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
+      const y  = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
+      card.style.transform = `perspective(600px) rotateX(${-y*10}deg) rotateY(${x*10}deg) scale3d(1.04,1.04,1.04)`;
+      card.style.transition = 'transform .06s ease,border-color .2s,background .2s,box-shadow .2s';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform  = '';
+      card.style.transition = 'transform .32s ease,border-color .2s,background .2s,box-shadow .2s';
+    });
+  }
+
+  function toRelative(url) {
+    // Blindagem: se por acaso vier uma URL absoluta apontando pra psx8.github.io,
+    // converte pra relativa (só o path depois de /main/ ou de github.io/)
+    if (!url) return '';
+    if (url.indexOf('psx8.github.io/') !== -1) {
+      return url.split('psx8.github.io/')[1];
+    }
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      try {
+        const u = new URL(url);
+        // Só permite mesma origem
+        if (u.origin !== window.location.origin) {
+          return u.pathname.replace(/^\//, '');
+        }
+      } catch(e) {}
+    }
+    return url;
+  }
+
+  var fwGrid = document.getElementById('fw-grid');
+
+  function buildGrid(groups) {
+    fwGrid.innerHTML = '';
+    groups.forEach(group => {
+      const card      = document.createElement('div');
+      card.className  = 'fw-card';
+      card.tabIndex   = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `Firmware ${group.label}`);
+      card.innerHTML  = `<div class="fw-range">${group.label}</div>`;
+      card.addEventListener('click',   () => { window.location.href = toRelative(group.entrypoint); });
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') window.location.href = toRelative(group.entrypoint); });
+      attachTilt(card);
+      fwGrid.appendChild(card);
+    });
+  }
+
+  buildGrid(STATIC_GROUPS);
+  var firstCard = fwGrid.querySelector('.fw-card');
+  if (firstCard) firstCard.focus();
+  </script>
+</body>
+</html>

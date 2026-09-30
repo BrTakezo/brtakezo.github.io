@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR" manifest="cache.manifest">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PKG Brasil // FW 13.02-13.52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+    --bg:#070707; --surface:#0e0e0e; --border:#1f1f1f;
+    --y:#f5c518; --y-dim:#c49a10; --y-bg:rgba(245,197,24,.07); --y-glow:rgba(245,197,24,.22);
+    --text:#efefef; --text-2:#666; --text-3:#333;
+    --red:#ff5555;
+    --fd:'Space Grotesk',system-ui,sans-serif;
+    --fb:'Inter',system-ui,sans-serif;
+    color-scheme:dark;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { height:100%; }
+body {
+    font-family:var(--fb); background:var(--bg); color:var(--text);
+    min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:20px 16px;
+}
+.bg-orb { position:fixed; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0; mix-blend-mode:screen; }
+.bg-orb-1 { width:600px; height:600px; background:radial-gradient(circle,rgba(245,197,24,.05) 0%,transparent 70%); top:-150px; left:-180px; animation:orb1 16s ease-in-out infinite; }
+.bg-orb-2 { width:400px; height:400px; background:radial-gradient(circle,rgba(245,197,24,.04) 0%,transparent 70%); bottom:-80px; right:-80px; animation:orb2 20s ease-in-out infinite; }
+@keyframes orb1 { 0%,100%{transform:translate(0,0)} 40%{transform:translate(55vw,35vh)} 75%{transform:translate(25vw,65vh)} }
+@keyframes orb2 { 0%,100%{transform:translate(0,0)} 45%{transform:translate(-45vw,-40vh)} 80%{transform:translate(-15vw,-55vh)} }
+.bg-grid {
+    position:fixed; inset:0;
+    background-image:linear-gradient(rgba(245,197,24,.02) 1px,transparent 1px), linear-gradient(90deg,rgba(245,197,24,.02) 1px,transparent 1px);
+    background-size:52px 52px; pointer-events:none; z-index:0;
+}
+#state,#det,#cache { position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden; }
+
+.stage { position:relative; z-index:1; width:min(92vw,460px); animation:fadeUp .45s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+.confirm-card {
+    position:relative; background:var(--surface); border:1px solid var(--border); border-radius:20px;
+    padding:clamp(28px,5vw,44px) clamp(24px,5vw,40px); text-align:center; overflow:hidden;
+}
+.confirm-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--y),transparent); }
+.confirm-kicker { color:var(--y); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; margin-bottom:14px; font-weight:700; }
+.confirm-title { font-family:var(--fd); font-weight:800; font-size:clamp(2rem,7vw,2.8rem); color:var(--y); line-height:1; letter-spacing:-.02em; margin-bottom:10px; }
+.confirm-sub { color:var(--text-2); font-size:.9rem; margin-bottom:24px; }
+.detected-fw {
+    background:var(--y-bg); border:1px solid var(--y-glow); border-radius:10px;
+    padding:12px 16px; margin-bottom:24px;
+    display:flex; align-items:center; justify-content:center; gap:10px; font-size:.85rem;
+}
+.detected-fw.err { background:rgba(255,85,85,.08); border-color:rgba(255,85,85,.3); color:var(--red); }
+.detected-fw .dot { width:8px; height:8px; border-radius:50%; background:var(--y); box-shadow:0 0 8px var(--y); }
+.detected-fw.err .dot { background:var(--red); box-shadow:0 0 8px var(--red); }
+.detected-fw .lbl { color:var(--text-2); text-transform:uppercase; letter-spacing:.1em; font-size:.72rem; }
+.detected-fw .val { color:var(--text); font-family:var(--fd); font-weight:700; }
+.detected-fw.err .val { color:var(--red); }
+
+.confirm-btn {
+    position:relative; display:block; width:100%;
+    background:var(--y); color:#000; border:none; border-radius:12px;
+    padding:16px; font-family:var(--fb); font-weight:700; font-size:1rem; letter-spacing:.02em;
+    cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-transform:uppercase; overflow:hidden;
+}
+.confirm-btn:hover:not(:disabled),
+.confirm-btn:focus:not(:disabled) { background:#ffd633; transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,197,24,.35); outline:none; }
+.confirm-btn:active:not(:disabled) { transform:translateY(0); }
+.confirm-btn:focus:not(:disabled) { box-shadow:0 0 0 3px #f5c518,0 8px 30px rgba(245,197,24,.35); }
+.confirm-btn:disabled {
+    cursor:wait; opacity:.85;
+    background:#333; color:var(--y);
+}
+.confirm-btn.loading::before {
+    content:''; position:absolute; top:50%; left:14px; translate:0 -50%;
+    width:16px; height:16px; border:2px solid rgba(245,197,24,.3);
+    border-top-color:var(--y); border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.confirm-note { color:var(--text-3); font-size:.72rem; margin-top:14px; }
+.footer { text-align:center; padding-top:32px; font-size:.7rem; color:var(--text-3); position:relative; z-index:1; }
+</style>
+</head>
+<body>
+    <div id="state">detecting firmware...</div>
+    <div id="det"></div>
+    <div id="cache"></div>
+
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-grid"></div>
+
+    <div class="stage">
+        <div class="confirm-card">
+            <div class="confirm-kicker">Confirmar Versão</div>
+            <div class="confirm-title">FW 13.02 – 13.52</div>
+            <div class="confirm-sub">Verifique se o firmware do seu PS4 está nesta faixa antes de continuar.</div>
+
+            <div id="detected" class="detected-fw">
+                <span class="dot"></span>
+                <span class="lbl">Detectado:</span>
+                <span class="val" id="detected-val">verificando…</span>
+            </div>
+
+            <button id="btn-start" class="confirm-btn" autofocus>Iniciar Desbloqueio</button>
+            <div class="confirm-note" id="note">Não desligue o console durante o processo.</div>
+        </div>
+    </div>
+
+    <footer class="footer">PKG Brasil · Desbloqueio PS4</footer>
+
+<script>
+(function () {
+    const stateEl = document.getElementById("state");
+    const detEl = document.getElementById("det");
+    const cacheEl = document.getElementById("cache");
+    const detected = document.getElementById("detected");
+    const detectedVal = document.getElementById("detected-val");
+    const btnStart = document.getElementById("btn-start");
+    const noteEl = document.getElementById("note");
+
+    function q(name) {
+        const m = new RegExp("[?&]" + name + "=([^&]*)").exec(location.search);
+        return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    // Detecção FW
+    const SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+    let key = null, fwnum = null;
+    const m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        let minor = parseInt(m[2], 16);
+        let ms = minor.toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+    const forced = q("force") === "1";
+    const supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+
+    stateEl.textContent = "detecting firmware...";
+    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b> &middot; <b>" + (supported ? "supported" : "unsupported") + "</b>";
+
+    if (!key) { detectedVal.textContent = "Firmware desconhecido"; detected.classList.add("err"); }
+    else if (!supported) { detectedVal.textContent = "FW " + key + " (não suportado)"; detected.classList.add("err"); btnStart.textContent = "Tentar Mesmo Assim"; }
+    else { detectedVal.textContent = "FW " + key + " ✓ compatível"; }
+
+    // AppCache
+    const ac = window.applicationCache;
+    let cacheReady = true;
+    function setCacheMsg(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+
+    if (ac && document.documentElement.hasAttribute("manifest") && navigator.onLine && ac.status === ac.IDLE) {
+        cacheReady = false;
+        setCacheMsg("verificando cache…");
+        ac.addEventListener("downloading", function () { cacheReady = false; setCacheMsg("baixando pra offline…"); }, false);
+        ac.addEventListener("progress", function (e) { if (e && e.total) setCacheMsg("cache " + Math.round((e.loaded / e.total) * 100) + "%"); }, false);
+        ac.addEventListener("cached", function () { cacheReady = true; setCacheMsg("pronto pra offline", true); }, false);
+        ac.addEventListener("updateready", function () { try { ac.swapCache(); } catch (e) {} cacheReady = true; setCacheMsg("atualização baixada", true); }, false);
+        ac.addEventListener("noupdate", function () { cacheReady = true; setCacheMsg("já em cache", true); }, false);
+        ac.addEventListener("error", function () { cacheReady = true; setCacheMsg("cache indisponível"); }, false);
+        ac.addEventListener("obsolete", function () { cacheReady = true; setCacheMsg("cache obsoleto"); }, false);
+        setTimeout(function () { cacheReady = true; }, 6000);
+    }
+
+    function goToExploit() {
+        let target = "jb.html";
+        if (location.search) target += location.search;
+        if (target.indexOf("log=") === -1) target += (target.indexOf("?") === -1 ? "?" : "&") + "log=1";
+        location.replace(target);
+    }
+
+    btnStart.addEventListener("click", function () {
+        btnStart.disabled = true;
+        btnStart.classList.add("loading");
+        btnStart.textContent = "Iniciando…";
+        noteEl.textContent = "Preparando exploit…";
+
+        // Aguarda cache (se necessário), depois redireciona
+        if (cacheReady) {
+            setTimeout(goToExploit, 300);
+        } else {
+            const chk = setInterval(function () {
+                if (cacheReady) { clearInterval(chk); goToExploit(); }
+            }, 200);
+            // failsafe: força após 8s
+            setTimeout(function () { clearInterval(chk); goToExploit(); }, 8000);
+        }
+    });
+})();
+</script>
+</body>
+</html>

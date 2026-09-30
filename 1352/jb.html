@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.manifest">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKG Brasil // 13.02-13.52</title>
+<style>
+@property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+
+:root {
+    --bg: #070707;
+    --surface: #0e0e0e;
+    --line: #1f1f1f;
+    --lb: #2c2c2c;
+    --text: #f5f5f5;
+    --muted: #b5b5b5;
+    --dim: #666;
+    --y: #f5c518;
+    --y-dim: #c49a10;
+    --y-bg: rgba(245,197,24,.07);
+    --y-glow: rgba(245,197,24,.22);
+    --red: #ff9b9b;
+    --amber: #e1bd72;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html,body { height:100%; }
+body {
+    background: var(--bg);
+    background-image:
+        linear-gradient(rgba(245,197,24,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,197,24,.03) 1px, transparent 1px);
+    background-size: 36px 36px;
+    color: var(--text);
+    font: 16px/1.5 Consolas, "Liberation Mono", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px 16px;
+    overflow-x: hidden;
+}
+
+/* ── hidden exploit elements ── */
+#state, #out { position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden; }
+
+/* ── top bar ── */
+.bar {
+    position:fixed; top:0; left:0; right:0;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom: 1px solid var(--lb);
+    background: var(--bg);
+    font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+    padding: 10px 20px;
+    z-index: 10;
+}
+.bar b { color:var(--y); font-weight:400; }
+.bar-right { color:var(--dim); }
+.bar-right::before { color:var(--y); content:"\25CF "; }
+
+/* ── progress panel ── */
+.wrap {
+    position:relative;
+    padding:3px;
+    border-radius:26px;
+    width: min(92vw, 440px);
+    animation: panelIn .5s cubic-bezier(.22,1,.36,1);
+}
+.wrap::before {
+    content:''; position:absolute; inset:-2px;
+    border-radius:28px; z-index:0;
+    background:conic-gradient(from var(--angle), transparent 25%, var(--y) 50%, transparent 75%);
+    animation:rotateBorder 2.5s linear infinite;
+    opacity:.7;
+}
+@keyframes rotateBorder { to { --angle:360deg; } }
+@keyframes panelIn { from{opacity:0;transform:scale(.92) translateY(24px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+.inner {
+    position:relative; z-index:1;
+    background:var(--surface);
+    border-radius:24px;
+    padding: clamp(32px,5vw,52px) clamp(28px,5vw,56px);
+    text-align:center;
+    overflow:hidden;
+}
+.inner::before {
+    content:''; position:absolute;
+    top:-80px; left:50%; translate:-50% 0;
+    width:300px; height:300px;
+    background:radial-gradient(circle, rgba(245,197,24,.07) 0%, transparent 65%);
+    pointer-events:none;
+}
+
+.fw-badge {
+    display:inline-flex; align-items:center;
+    background:var(--y-bg);
+    border:1px solid var(--y-glow);
+    border-radius:99px;
+    padding:4px 16px;
+    font-size:.72rem; color:var(--y);
+    font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+    margin-bottom:clamp(20px,3vh,32px);
+}
+
+.pct-num {
+    font-size:clamp(5rem,22vw,8.5rem);
+    font-weight:700; color:var(--y);
+    line-height:1; letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    margin-bottom:clamp(16px,2.5vh,26px);
+    font-family: Consolas, monospace;
+}
+.pct-sym {
+    font-size:38%; vertical-align:top;
+    margin-top:.2em; display:inline-block;
+    color:var(--y-dim);
+}
+
+.prog-track {
+    height:6px; background:var(--line);
+    border-radius:99px; overflow:hidden;
+    margin-bottom:clamp(10px,2vh,18px);
+    position:relative;
+}
+.prog-bar {
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--y-dim), var(--y));
+    border-radius:99px;
+    transition:width .14s linear;
+    position:relative;
+}
+.prog-bar::after {
+    content:''; position:absolute;
+    right:-4px; top:50%; translate:0 -50%;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--y);
+    box-shadow:0 0 10px 4px rgba(245,197,24,.5);
+    opacity:0; transition:opacity .2s;
+}
+.prog-bar.glow::after { opacity:1; }
+
+.prog-status {
+    font-size:.82rem;
+    color:var(--muted);
+    min-height:1.4em;
+    transition:color .3s;
+}
+.prog-status.err { color:var(--red); }
+.prog-status.ok  { color:var(--y); }
+
+/* ── particles ── */
+#particles { position:fixed; inset:0; pointer-events:none; z-index:9999; }
+.particle {
+    position:absolute; width:6px; height:6px;
+    background:var(--y); border-radius:50%;
+    animation:fly .65s ease-out forwards;
+}
+.particle.s { width:3px; height:3px; background:#fff; }
+@keyframes fly { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)} }
+
+/* ── success check overlay ── */
+#check-overlay {
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    background: #070707;
+    opacity:0; pointer-events:none;
+    z-index:100;
+    transition: opacity .4s ease;
+}
+#check-overlay.show { opacity:1; pointer-events:auto; }
+
+.check-circle {
+    width:88px; height:88px;
+    border-radius:50%;
+    background: radial-gradient(circle at 40% 35%, #2ddb7a, #18a855);
+    box-shadow: 0 0 0 0 rgba(29,185,84,.5);
+    display:flex; align-items:center; justify-content:center;
+    transform: scale(0);
+    animation: none;
+}
+.check-circle.pop {
+    animation: circPop .45s cubic-bezier(.34,1.56,.64,1) forwards,
+               circGlow 1.8s ease 0.45s infinite;
+}
+@keyframes circPop {
+    from { transform:scale(0); opacity:0; }
+    to   { transform:scale(1); opacity:1; }
+}
+@keyframes circGlow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(29,185,84,.45); }
+    50%      { box-shadow: 0 0 0 18px rgba(29,185,84,0); }
+}
+
+.check-svg { width:44px; height:44px; overflow:visible; }
+.check-path {
+    fill:none; stroke:#fff;
+    stroke-width:5; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:60;
+    stroke-dashoffset:60;
+}
+.check-path.draw {
+    animation: drawCheck .38s cubic-bezier(.4,0,.2,1) .3s forwards;
+}
+@keyframes drawCheck { to { stroke-dashoffset:0; } }
+
+.check-label {
+    margin-top:22px;
+    font-size:.95rem; font-weight:700;
+    color:#2ddb7a; letter-spacing:.04em;
+    text-transform:uppercase;
+    opacity:0; transform:translateY(8px);
+}
+.check-label.show {
+    animation: labelIn .3s ease .55s forwards;
+}
+@keyframes labelIn {
+    to { opacity:1; transform:translateY(0); }
+}
+
+.check-sub {
+    margin-top:6px;
+    font-size:.74rem; color:#6ee09a;
+    opacity:0;
+}
+.check-sub.show {
+    animation: labelIn .3s ease .72s forwards;
+}
+
+/* border glow green on success */
+.wrap.done::before {
+    background: conic-gradient(from var(--angle), transparent 25%, #2ddb7a 50%, transparent 75%);
+}
+</style>
+</head>
+<body>
+    <!-- hidden exploit elements — exploit JS reads/writes these -->
+    <div id="state">loading jailbreak...</div>
+    <div id="out"></div>
+
+    <div id="particles"></div>
+
+    <header class="bar">
+        <span><b>PKG Brasil</b> // desbloqueio ps4</span>
+        <span class="bar-right">fw 13.02-13.52</span>
+    </header>
+
+    <div class="wrap" id="wrap">
+        <div class="inner">
+            <div class="fw-badge">FW 13.02 – 13.52</div>
+            <div class="pct-num" id="prog-pct">0<span class="pct-sym">%</span></div>
+            <div class="prog-track">
+                <div class="prog-bar" id="prog-bar"></div>
+            </div>
+            <div class="prog-status" id="prog-status">Iniciando…</div>
+
+            <div id="check-overlay">
+                <div class="check-circle" id="check-circle">
+                    <svg class="check-svg" viewBox="0 0 44 44">
+                        <path class="check-path" id="check-path" d="M8 22 L18 33 L36 12"/>
+                    </svg>
+                </div>
+                <div class="check-label" id="check-label">PS4 Desbloqueado!</div>
+                <div class="check-sub" id="check-sub">Desbloqueio realizado com sucesso</div>
+            </div>
+        </div>
+    </div>
+
+<script type="module">import "./jb.js";</script>
+<script>
+// ── auto-reload watchdog (unchanged logic from psx8) ──────────────────────────
+(function () {
+    var KEY = "pspulse-1352-reloads";
+    var MAX = 2;
+    var WINDOW_MS = 10 * 60 * 1000;
+    var handled = false;
+    function readBudget() {
+        var rec = null;
+        try { rec = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch (e) { rec = null; }
+        var now = Date.now();
+        if (!rec || typeof rec.n !== "number" || (now - rec.t) > WINDOW_MS) return { n: 0, t: now };
+        return rec;
+    }
+    function spendBudget() {
+        var rec = readBudget();
+        rec.n++;
+        rec.t = Date.now();
+        try {
+            sessionStorage.setItem(KEY, JSON.stringify(rec));
+            var check = JSON.parse(sessionStorage.getItem(KEY) || "null");
+            if (check && check.n === rec.n) return rec;
+        } catch (e) {}
+        return null;
+    }
+    function successSeen(txt) {
+        var lines = txt.split("\n");
+        for (var i = lines.length - 1; i >= 0; i--) {
+            if (lines[i].indexOf("PAYLOAD-RUNNING") !== -1) {
+                return lines[i].indexOf("PROOF-OK") === 0;
+            }
+        }
+        return false;
+    }
+    setInterval(function () {
+        try {
+            if (handled) return;
+            var st = document.getElementById("state");
+            var out = document.getElementById("out");
+            var txt = out ? out.textContent : "";
+            if (successSeen(txt)) {
+                try { sessionStorage.removeItem(KEY); } catch (e) {}
+                handled = true;
+                return;
+            }
+            if (!st || st.textContent !== "threw") return;
+            if (txt.indexOf("attempt-ceiling") === -1) return;
+            handled = true;
+            var rec = spendBudget();
+            if (!rec || rec.n > MAX) return;
+            st.textContent = "heap layout missed -- reloading (" + rec.n + "/2)...";
+            setTimeout(function () { location.reload(); }, 2000);
+        } catch (e) {}
+    }, 3000);
+})();
+
+// ── progress UI ───────────────────────────────────────────────────────────────
+(function () {
+    var pctEl      = document.getElementById("prog-pct");
+    var barEl      = document.getElementById("prog-bar");
+    var statusEl   = document.getElementById("prog-status");
+    var stateEl    = document.getElementById("state");
+    var outEl      = document.getElementById("out");
+    var parEl      = document.getElementById("particles");
+    var wrapEl     = document.getElementById("wrap");
+    var overlayEl  = document.getElementById("check-overlay");
+    var circleEl   = document.getElementById("check-circle");
+    var pathEl     = document.getElementById("check-path");
+    var labelEl    = document.getElementById("check-label");
+    var subEl      = document.getElementById("check-sub");
+
+    var current = 0;
+    var target  = 12;   // ramp target while exploit loads
+    var done    = false;
+    var raf;
+
+    var PHASES = [
+        { at:  0, text: "Inicializando…" },
+        { at: 15, text: "Iniciando desbloqueio…" },
+        { at: 40, text: "Preparando sistema…" },
+        { at: 65, text: "Desbloqueando…" },
+        { at: 85, text: "Finalizando…" },
+        { at: 99, text: "Pronto!" },
+    ];
+
+    function speed(p) {
+        if (p < 30) return 1.2;
+        if (p < 60) return 0.6;
+        if (p < 80) return 0.3;
+        if (p < 95) return 0.15;
+        return 1.6;
+    }
+
+    function setStatus(txt, cls) {
+        statusEl.textContent = txt;
+        statusEl.className   = "prog-status" + (cls ? " " + cls : "");
+    }
+
+    function updatePhase(p) {
+        var phase = null;
+        for (var i = 0; i < PHASES.length; i++) { if (p >= PHASES[i].at) phase = PHASES[i]; }
+        if (phase) setStatus(phase.text);
+    }
+
+    function setBar(p) {
+        var r = Math.floor(p);
+        pctEl.innerHTML = r + '<span class="pct-sym">%</span>';
+        barEl.style.width = p + "%";
+        if (p > 5) barEl.classList.add("glow");
+    }
+
+    function burst() {
+        var rect = barEl.getBoundingClientRect();
+        var cx   = rect.left + rect.width / 2;
+        var cy   = rect.top  + rect.height / 2;
+        for (var i = 0; i < 26; i++) {
+            var p     = document.createElement("div");
+            p.className = (i % 3 === 0) ? "particle s" : "particle";
+            var angle = (i / 26) * 360 + Math.random() * 10;
+            var dist  = 50 + Math.random() * 90;
+            p.style.cssText = "left:" + cx + "px;top:" + cy + "px;--tx:" + (Math.cos(angle * Math.PI / 180) * dist) + "px;--ty:" + (Math.sin(angle * Math.PI / 180) * dist) + "px;animation-delay:" + (Math.random() * .08) + "s;animation-duration:" + (.45 + Math.random() * .25) + "s;";
+            parEl.appendChild(p);
+            p.addEventListener("animationend", function () { this.remove(); }, false);
+        }
+    }
+
+    function showCheck() {
+        overlayEl.classList.add("show");
+        circleEl.classList.add("pop");
+        pathEl.classList.add("draw");
+        labelEl.classList.add("show");
+        subEl.classList.add("show");
+        wrapEl.classList.add("done");
+    }
+
+    function finish(success) {
+        done = true;
+        cancelAnimationFrame(raf);
+        if (success) {
+            target = 100;
+            var snap = setInterval(function () {
+                current = Math.min(100, current + 2.2);
+                setBar(current);
+                if (current >= 99) updatePhase(100);
+                if (current >= 100) {
+                    clearInterval(snap);
+                    burst();
+                    setStatus("Desbloqueio concluído!", "ok");
+                    setTimeout(showCheck, 420);
+                }
+            }, 16);
+        } else {
+            setBar(current);
+            setStatus("Falha — recarregando…", "err");
+        }
+    }
+
+    function tick() {
+        if (done) return;
+        if (current < target) {
+            current = Math.min(target, current + speed(current) * (Math.random() * .5 + .75));
+        }
+        setBar(current);
+        updatePhase(Math.floor(current));
+        raf = requestAnimationFrame(tick);
+    }
+
+    // Gradually push target forward while exploit is running
+    var rampInterval = setInterval(function () {
+        if (done) { clearInterval(rampInterval); return; }
+        if (target < 85) target = Math.min(85, target + (Math.random() * 3 + 1));
+    }, 800);
+
+    // Watch exploit #state element for success/failure
+    var observer = new MutationObserver(function () {
+        if (done) return;
+        var txt = stateEl.textContent;
+        var cls = stateEl.className;
+        if (cls === "ok") {
+            clearInterval(rampInterval);
+            finish(true);
+        } else if (txt === "threw" || txt.indexOf("FAILED") !== -1) {
+            clearInterval(rampInterval);
+            setTimeout(function () { finish(false); }, 400);
+        } else if (txt.indexOf("reloading") !== -1) {
+            setStatus("Recarregando…");
+        }
+    });
+    observer.observe(stateEl, { childList: true, characterData: true, subtree: true });
+
+    raf = requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

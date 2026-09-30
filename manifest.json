@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "latest": "gh-ea85cfe",
+  "releases": [
+    {
+      "version": "gh-ea85cfe",
+      "date": "2026-09-29",
+      "changelog": "Sincronizado com psx8/psx8.github.io @ ea85cfe4434ddc38943a9cb12e255a2b2a64a190\n\nGoldHEN v2.4b18.12 para PS4 FW ≤ 13.52\nGoldHEN v2.4b18.5 incluso para FW 5.05 / 6.72 (goldhen5.bin)\n\nExploits cobertos:\n- FW 13.02–13.52: SlopKit + GoldHEN (1352/)\n- FW 11.00–13.00: SlopKit WebKit (1300/latest/)\n- FW 9.00–9.60:   PSFree + Lapse (900/)\n- FW 7.00–8.52:   PSFree + Lapse (700/)\n- FW 6.00–11.02:  CSSFontFace (css/latest/)\n- FW 6.72:        Legacy (672/)\n- FW 5.05:        Legacy (505/)",
+      "source": "https://github.com/psx8/psx8.github.io",
+      "firmwares": ["5.05","6.72","7.00","7.02","7.50","7.51","7.55","8.00","8.01","8.03","8.50","8.51","8.52","9.00","9.03","9.04","9.50","9.51","9.52","9.55","9.60","11.00","11.02","11.50","12.00","12.02","12.50","12.52","13.00","13.02","13.50","13.52"],
+      "files": [
+        {
+          "name": "goldhen.bin",
+          "description": "GoldHEN v2.4b18.12",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/goldhen.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "jb.js",
+          "description": "SlopKit jailbreak (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/jb.js",
+          "sha256": "",
+          "size": 101418
+        },
+        {
+          "name": "core.js",
+          "description": "SlopKit core (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/core.js",
+          "sha256": "",
+          "size": 41321
+        },
+        {
+          "name": "mem.js",
+          "description": "Memory utilities (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/mem.js",
+          "sha256": "",
+          "size": 26853
+        },
+        {
+          "name": "int64.js",
+          "description": "Int64 helper (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/int64.js",
+          "sha256": "",
+          "size": 2548
+        },
+        {
+          "name": "ps4_offsets.js",
+          "description": "Kernel offsets (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/ps4_offsets.js",
+          "sha256": "",
+          "size": 17015
+        },
+        {
+          "name": "rpc_worker.js",
+          "description": "RPC worker (FW 13.02–13.52)",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/rpc_worker.js",
+          "sha256": "",
+          "size": 6490
+        },
+        {
+          "name": "patches/1302.bin",
+          "description": "Patch FW 13.02",
+          "firmware": "13.02",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/patches/1302.bin",
+          "sha256": "",
+          "size": 314
+        },
+        {
+          "name": "patches/1350.bin",
+          "description": "Patch FW 13.50",
+          "firmware": "13.50",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/patches/1350.bin",
+          "sha256": "",
+          "size": 314
+        },
+        {
+          "name": "patches/1352.bin",
+          "description": "Patch FW 13.52",
+          "firmware": "13.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1352/patches/1352.bin",
+          "sha256": "",
+          "size": 314
+        },
+        {
+          "name": "1300/goldhen.bin",
+          "description": "GoldHEN v2.4b18.12 (FW 11.00–13.00)",
+          "firmware": "13.00",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1300/latest/payload.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "1300/chain_lapse.js",
+          "description": "SlopKit chain-lapse (FW 11.00–13.00)",
+          "firmware": "13.00",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1300/latest/chain_lapse.js",
+          "sha256": "",
+          "size": 208762
+        },
+        {
+          "name": "1300/chain_poops.js",
+          "description": "SlopKit chain-poops (FW 11.00–13.00)",
+          "firmware": "13.00",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1300/latest/chain_poops.js",
+          "sha256": "",
+          "size": 134525
+        },
+        {
+          "name": "1300/core.js",
+          "description": "SlopKit core (FW 11.00–13.00)",
+          "firmware": "13.00",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1300/latest/core.js",
+          "sha256": "",
+          "size": 43696
+        },
+        {
+          "name": "1300/ps4_offsets.js",
+          "description": "Kernel offsets (FW 11.00–13.00)",
+          "firmware": "13.00",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/1300/latest/ps4_offsets.js",
+          "sha256": "",
+          "size": 20159
+        },
+        {
+          "name": "900/goldhen.bin",
+          "description": "GoldHEN v2.4b18.12 (FW 9.00–9.60)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/goldhen.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "900/goldhen5.bin",
+          "description": "GoldHEN v2.4b18.5 (FW 9.00–9.60 variante)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/goldhen5.bin",
+          "sha256": "",
+          "size": 281696
+        },
+        {
+          "name": "900/psfree.js",
+          "description": "PSFree exploit (FW 9.00–9.60)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/psfree.js",
+          "sha256": "",
+          "size": 27443
+        },
+        {
+          "name": "900/lapse.js",
+          "description": "Lapse kernel exploit (FW 9.00–9.60)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/lapse.js",
+          "sha256": "",
+          "size": 61030
+        },
+        {
+          "name": "900/loader.js",
+          "description": "Payload loader (FW 9.00–9.60)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/loader.js",
+          "sha256": "",
+          "size": 3482
+        },
+        {
+          "name": "900/payloads.js",
+          "description": "Payload list (FW 9.00–9.60)",
+          "firmware": "9.60",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/900/payloads.js",
+          "sha256": "",
+          "size": 8294
+        },
+        {
+          "name": "700/goldhen.bin",
+          "description": "GoldHEN v2.4b18.12 (FW 7.00–8.52)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/goldhen.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "700/goldhen5.bin",
+          "description": "GoldHEN v2.4b18.5 (FW 7.00–8.52 variante)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/goldhen5.bin",
+          "sha256": "",
+          "size": 281696
+        },
+        {
+          "name": "700/psfree.mjs",
+          "description": "PSFree exploit (FW 7.00–8.52)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/psfree.mjs",
+          "sha256": "",
+          "size": 26047
+        },
+        {
+          "name": "700/lapse.mjs",
+          "description": "Lapse kernel exploit (FW 7.00–8.52)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/lapse.mjs",
+          "sha256": "",
+          "size": 61375
+        },
+        {
+          "name": "700/loader.js",
+          "description": "Payload loader (FW 7.00–8.52)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/loader.js",
+          "sha256": "",
+          "size": 3432
+        },
+        {
+          "name": "700/payloads.js",
+          "description": "Payload list (FW 7.00–8.52)",
+          "firmware": "8.52",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/700/payloads.js",
+          "sha256": "",
+          "size": 8050
+        },
+        {
+          "name": "672/goldhen.bin",
+          "description": "GoldHEN v2.4b18.12 (FW 6.72)",
+          "firmware": "6.72",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/672/goldhen.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "672/goldhen5.bin",
+          "description": "GoldHEN v2.4b18.5 (FW 6.72 variante)",
+          "firmware": "6.72",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/672/goldhen5.bin",
+          "sha256": "",
+          "size": 281696
+        },
+        {
+          "name": "672/ftp.bin",
+          "description": "FTP server payload (FW 6.72)",
+          "firmware": "6.72",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/672/ftp.bin",
+          "sha256": "",
+          "size": 26864
+        },
+        {
+          "name": "672/ps4debug.bin",
+          "description": "PS4Debug payload (FW 6.72)",
+          "firmware": "6.72",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/672/ps4debug.bin",
+          "sha256": "",
+          "size": 84936
+        },
+        {
+          "name": "505/goldhen.bin",
+          "description": "GoldHEN v2.4b18.12 (FW 5.05)",
+          "firmware": "5.05",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/505/goldhen.bin",
+          "sha256": "",
+          "size": 293120
+        },
+        {
+          "name": "505/goldhen5.bin",
+          "description": "GoldHEN v2.4b18.5 (FW 5.05 variante)",
+          "firmware": "5.05",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/505/goldhen5.bin",
+          "sha256": "",
+          "size": 281696
+        },
+        {
+          "name": "505/ftp.bin",
+          "description": "FTP server payload (FW 5.05)",
+          "firmware": "5.05",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/505/ftp.bin",
+          "sha256": "",
+          "size": 26864
+        },
+        {
+          "name": "505/ps4debug.bin",
+          "description": "PS4Debug payload (FW 5.05)",
+          "firmware": "5.05",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/505/ps4debug.bin",
+          "sha256": "",
+          "size": 84936
+        },
+        {
+          "name": "505/app2usb.bin",
+          "description": "App2USB payload (FW 5.05)",
+          "firmware": "5.05",
+          "url": "https://raw.githubusercontent.com/psx8/psx8.github.io/main/505/app2usb.bin",
+          "sha256": "",
+          "size": 25928
+        }
+      ]
+    }
+  ],
+  "firmwareCompatibility": [
+    { "firmware": "5.05",  "supported": true,  "version": "gh-ea85cfe", "notes": "Legacy — exploit dedicado (505/)" },
+    { "firmware": "6.72",  "supported": true,  "version": "gh-ea85cfe", "notes": "Legacy — exploit dedicado (672/)" },
+    { "firmware": "7.00",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "7.02",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "7.50",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "7.51",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "7.55",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.00",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.01",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.03",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.50",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.51",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "8.52",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (700/)" },
+    { "firmware": "9.00",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.03",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.04",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.50",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.51",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.52",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.55",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "9.60",  "supported": true,  "version": "gh-ea85cfe", "notes": "PSFree + Lapse (900/)" },
+    { "firmware": "11.00", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "11.02", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "11.50", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "12.00", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "12.02", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "12.50", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "12.52", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "13.00", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit WebKit (1300/latest/)" },
+    { "firmware": "13.02", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit + GoldHEN (1352/)" },
+    { "firmware": "13.50", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit + GoldHEN (1352/)" },
+    { "firmware": "13.52", "supported": true,  "version": "gh-ea85cfe", "notes": "SlopKit + GoldHEN (1352/)" }
+  ],
+  "exploitGroups": [
+    {
+      "id": "1352",
+      "label": "13.02 – 13.52",
+      "firmwares": ["13.02","13.50","13.52"],
+      "exploit": "SlopKit + GoldHEN",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/1352/index.html",
+      "description": "SlopKit WebKit exploit com GoldHEN integrado."
+    },
+    {
+      "id": "1300",
+      "label": "11.00 – 13.00",
+      "firmwares": ["11.00","11.02","11.50","12.00","12.02","12.50","12.52","13.00"],
+      "exploit": "SlopKit WebKit",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/1300/version-selector.html",
+      "description": "SlopKit usando o motor WebKit."
+    },
+    {
+      "id": "900",
+      "label": "9.00 – 9.60",
+      "firmwares": ["9.00","9.03","9.04","9.50","9.51","9.52","9.55","9.60"],
+      "exploit": "PSFree + Lapse",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/900/version-selector.html",
+      "description": "PSFree WebKit + Lapse kernel exploit."
+    },
+    {
+      "id": "700",
+      "label": "7.00 – 8.52",
+      "firmwares": ["7.00","7.02","7.50","7.51","7.55","8.00","8.01","8.03","8.50","8.51","8.52"],
+      "exploit": "PSFree + Lapse",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/700/version-selector.html",
+      "description": "PSFree WebKit + Lapse kernel exploit."
+    },
+    {
+      "id": "672",
+      "label": "6.72",
+      "firmwares": ["6.72"],
+      "exploit": "Legacy",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/672/index.html",
+      "description": "Exploit legado para FW 6.72."
+    },
+    {
+      "id": "505",
+      "label": "5.05",
+      "firmwares": ["5.05"],
+      "exploit": "Legacy",
+      "goldhen": "2.4b18.12",
+      "entrypoint": "https://psx8.github.io/505/index.html",
+      "description": "Exploit legado para FW 5.05."
+    }
+  ],
+  "_upstream": {
+    "repo": "psx8/psx8.github.io",
+    "commit": "ea85cfe4434ddc38943a9cb12e255a2b2a64a190",
+    "syncedAt": "2026-09-29"
+  }
+}
